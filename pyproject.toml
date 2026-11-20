@@ -1,0 +1,15 @@
+[project]
+name = "dsd-director"
+description = "Multi-shot MiniMax H3 director panel: inline shot list, reference slots, first-pass plus 2x latent oversample, SRT/EDL export."
+version = "2.3.2"
+requires-python = ">=3.10"
+dependencies = []
+classifiers = [
+    "Operating System :: OS Independent",
+    "Environment :: GPU :: NVIDIA CUDA",
+]
+
+[tool.comfy]
+DisplayName = "DSD Director"
+Icon = ""
+requires-comfyui = ">=0.45.0"

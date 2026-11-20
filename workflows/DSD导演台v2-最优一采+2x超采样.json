@@ -1,0 +1,484 @@
+{
+ "last_node_id": 91,
+ "last_link_id": 9,
+ "nodes": [
+  {
+   "id": 1,
+   "type": "VAELoader",
+   "pos": [
+    40,
+    40
+   ],
+   "size": [
+    320,
+    60
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "VAE",
+     "type": "VAE",
+     "links": [
+      1
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAELoader"
+   },
+   "widgets_values": [
+    "minimax_h3_video_vae_fp16.safetensors"
+   ]
+  },
+  {
+   "id": 2,
+   "type": "VAELoader",
+   "pos": [
+    40,
+    140
+   ],
+   "size": [
+    320,
+    60
+   ],
+   "flags": {},
+   "order": 1,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "VAE",
+     "type": "VAE",
+     "links": [
+      2
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAELoader"
+   },
+   "widgets_values": [
+    "minimax_h3_audio_vae_fp32.safetensors"
+   ]
+  },
+  {
+   "id": 3,
+   "type": "CLIPLoader",
+   "pos": [
+    40,
+    240
+   ],
+   "size": [
+    320,
+    110
+   ],
+   "flags": {},
+   "order": 2,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "CLIP",
+     "type": "CLIP",
+     "links": [
+      3
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "CLIPLoader"
+   },
+   "widgets_values": [
+    "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+    "minimax",
+    "default"
+   ]
+  },
+  {
+   "id": 4,
+   "type": "UNETLoader",
+   "pos": [
+    40,
+    390
+   ],
+   "size": [
+    340,
+    90
+   ],
+   "flags": {},
+   "order": 3,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      4
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "UNETLoader"
+   },
+   "widgets_values": [
+    "MiniMax\\minimax_h3_hybrid_fl2va_ref2va_b25-49-int8_r.safetensors",
+    "default"
+   ]
+  },
+  {
+   "id": 70,
+   "type": "LoraLoaderModelOnly",
+   "pos": [
+    420,
+    40
+   ],
+   "size": [
+    340,
+    90
+   ],
+   "flags": {},
+   "order": 4,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 4
+    }
+   ],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      5
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "LoraLoaderModelOnly"
+   },
+   "widgets_values": [
+    "MINIMAX\\minimax_h3_fl2v_turbo_4step_v1.2_768p_comfyui_bf16.safetensors",
+    1.0
+   ]
+  },
+  {
+   "id": 72,
+   "type": "LoraLoaderModelOnly",
+   "pos": [
+    420,
+    160
+   ],
+   "size": [
+    340,
+    90
+   ],
+   "flags": {},
+   "order": 5,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 5
+    }
+   ],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      6
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "LoraLoaderModelOnly"
+   },
+   "widgets_values": [
+    "MINIMAX\\pika_h3_flex_turbo_4step_ref2va.safetensors",
+    1.0
+   ]
+  },
+  {
+   "id": 73,
+   "type": "LoraLoaderModelOnly",
+   "pos": [
+    420,
+    280
+   ],
+   "size": [
+    340,
+    90
+   ],
+   "flags": {},
+   "order": 6,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 6
+    }
+   ],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      7
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "LoraLoaderModelOnly"
+   },
+   "widgets_values": [
+    "MINIMAX\\minimax_h3_lms_v1.0_r64.safetensors",
+    1.0
+   ]
+  },
+  {
+   "id": 90,
+   "type": "DSDDirector",
+   "pos": [
+    820,
+    40
+   ],
+   "size": [
+    620,
+    1960
+   ],
+   "flags": {},
+   "order": 7,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 7
+    },
+    {
+     "name": "clip",
+     "type": "CLIP",
+     "link": 3
+    },
+    {
+     "name": "video_vae",
+     "type": "VAE",
+     "link": 1
+    },
+    {
+     "name": "audio_vae",
+     "type": "VAE",
+     "link": 2
+    }
+   ],
+   "outputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "links": [
+      8
+     ]
+    },
+    {
+     "name": "audio",
+     "type": "AUDIO",
+     "links": [
+      9
+     ]
+    },
+    {
+     "name": "report_json",
+     "type": "STRING",
+     "links": null
+    },
+    {
+     "name": "seconds",
+     "type": "FLOAT",
+     "links": null
+    },
+    {
+     "name": "summary",
+     "type": "STRING",
+     "links": null
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "DSDDirector"
+   },
+   "widgets_values": [
+    2609198601,
+    "randomize",
+    "自定义",
+    true,
+    7.9,
+    "镜头",
+    "{\"v\": 2, \"fps\": 24, \"shots\": [{\"id\": \"s1\", \"seconds\": 5.1667, \"prompt\": \"subject_definitions:\\n<Subject 1> 是<Picture 1>至参考图中的少女「女仆鲸鱼娘」：深蓝近黑的及腰长卷发在发梢泛出海蓝渐变，头顶有呆毛，两侧是鲸鱼鳍形状的蓝色耳鳍，头戴白色荷叶边女仆发带，鬓角别着浅蓝色蝴蝶结；眼睛是清澈的湖蓝色，圆脸，白皙皮肤，温和明朗的笑容是她的身份基准；身穿深蓝色双排金扣女仆长裙，肩部泡泡袖带开衩露出白色衬衫，胸前白色荷叶边胸襟配深蓝大蝴蝶结，腰系白色荷叶边围裙，围裙中央绣有蓝色鲸鱼徽章，裙摆内层为浅蓝竖条纹衬裙并印有淡金色波纹纹样，身后拖着一条巨大的深蓝色鲸鱼尾巴，尾鳍内侧为浅珍珠白；白色过膝袜与黑色玛丽珍鞋。她的面部特征、发型颜色、耳鳍形状、鲸尾形态、女仆装束必须以参考图组为唯一身份基准，全程不得改变。\\n<Subject 2> 是故事发生的清晨海港小镇环境：石砌台阶与红色鸟居式港门、栈桥、白色欧式小镇房屋、碧蓝海面、金色晨雾与盘旋的海鸥，由参考图的纯白背景延展为明亮通透的日式动画海港场景。\\n<Subject 3> 是<Subject 1>身后的鲸尾与海水的互动：鲸尾拍水、卷浪、水花与泡沫，全程保持参考图中鲸尾的深蓝配色与浅白尾鳍内侧。\\n<Picture 1> 是<Subject 1>的正面半身参考，提供脸部、笑容与女仆装细节。\\n<Picture 2> 是<Subject 1>的正面全身参考，提供整体体型、女仆长裙比例与站姿轮廓。\\n\\n 是<Subject 1>的正面全身参考，提供女仆长裙完整轮廓、鲸尾位置与站姿比例。\\n16秒整片由三段链路组成：第一段5.17秒（石阶推近-环绕现身-下阶停步，末帧=背对镜头静立栈桥入口）；第二段5.17秒（踏前展臂-扬尾-拍浪升格，末帧=张臂仰头大笑水花未散）；第三段5.17秒（浪扑泼墨-水幕眨眼-坐缘回眸拉远定格）。跨段一致性规则：光照恒为清晨金色逆光且方向自海面来；海况由平静到活跃再回落的弧线；人物情绪弧线为好奇-兴奋-满足；服装湿痕递进——第一段全程干燥、第二段围裙下缘沾水、第三段发梢湿润加裙摆扇形湿褶；鲸歌音色三段递进为远处的低吟、中段的应答、尾段的近场长音。各段生成时以本段描述为主，但上述全局规则必须遵守，不得提前消耗后续段落的动作。\\n\\n\\nsummary:\\n[keyframe completion] 目标视频以<Picture>参考组为身份基准，将<Subject 1>置于<Subject 2>清晨海港小镇，完成一段5.17秒明亮日式动画风格的连续运镜短片（16秒整片第一段）：石阶背影推近、环绕现身、提裙下阶，收在栈桥入口停步的稳定衔接帧，全程明快通透，海风与鲸歌氛围。\\n\\nretention_analysis:\\n<Subject 1> (appears in [Shot 1], [Shot 2], [Shot 3]): fully_preserved - 深蓝渐变长发、鲸耳鳍、女仆发带、湖蓝色眼睛、深蓝女仆裙、白围裙鲸鱼徽章、鲸尾与白色过膝袜全程以参考图组为唯一基准，仅表情与动作变化。\\n<Subject 2> (appears in [Shot 1], [Shot 3]): fully_preserved - 清晨海港的石阶、港门与小镇房屋保持同一世界观与光照方向。\\n<Subject 3> (appears in [Shot 1], [Shot 3]): fully_preserved - 鲸尾形态保持参考图基准，摆尾动作为场景表现。\\n<Picture 1> ([Shot 2] face anchor): fully_preserved - 正面笑容特写与参考图脸部完全一致。\\n\\ndetailed_description:\\n明亮日式动画风格，赛璐璐上色，两阶阴影加一层高光，皮肤暖白，海面与天空高明度低饱和，禁止写实质感与脏灰暗部；本段总时长5.17秒，清晨金色逆光，光线方向自海面来，光比柔和。\\n[Shot 1] 0至2秒：镜头贴地低角度从石阶底部向港门推近，<Subject 1>背对镜头立于石阶顶端，鲸尾在晨光中缓慢左右摆动，尾鳍关节先弯后展呈两段式动作，深蓝长发被海风掀起，金色晨雾在门框中流动，海鸥剪影掠过画面上缘。\\n[Shot 2] 2至3.5秒：镜头环绕运镜由背后转到正面，<Subject 1>转过身，鲸耳鳍轻轻颤动，湖蓝色眼睛看向镜头，露出参考图中的温和笑容，发带蝴蝶结随风轻晃，晨光在她发梢形成海蓝色渐变高光。\\n[Shot 3] 3.5至5.17秒：中景跟随平移，<Subject 1>一手提着女仆裙摆一手扶着围裙快步走下石阶，白围裙上的鲸鱼徽章与裙摆内层浅蓝条纹随步伐翻动，港门红柱在背景中划过；第4.5秒踏上栈桥入口木板，末帧停步，背对镜头静立于栈桥入口，双手从提裙改为自然垂放身侧，鲸尾垂落，末帧构图稳定，作为整段收尾与第二段开头的衔接锚点。\\n\\nenvironment_props_and_microdetails:\\n场景道具与微细节：石阶边缘附着少量浅青苔藓色块，台阶转角有磨白的圆角；港门横梁下悬挂两枚褪色的蓝色短帘，帘布随风小幅摆动但绳结位置不变；远处小镇屋顶的烟囱不冒烟，保持清晨安静感；海面远处有两三片白色帆影静泊不移动；海鸥群保持三至五只的小队形，只在[Shot 1]画面上缘与[Shot 3]背景出现；她走下台阶时裙摆下缘有约两帧的空气迟滞摆动，体现布料重量；停步时裙摆回落与木板轻响同帧出现；第4.5秒踏上木板时脚下有一下轻微的弹性下沉两帧；港门短帘的影子在她下阶时从身后扫过一次；石阶最下一级有浅浅的湿痕线，高度与她后来站上栈桥后的视线齐平，作为空间高度参照。\\n\\n\\ncamera_and_material:\\n镜头参数表：[Shot 1] 24mm 低角度推近，速度匀缓；[Shot 2] 35mm 180度环绕，环绕半径约1.5米，时长1.5秒；[Shot 3] 50mm 侧向跟随平移，与人物同速，末段过渡为固定机位。材质表现：女仆裙布料柔软下垂有褶皱弹性，围裙略硬挺，鲸尾表面光滑带湿润高光，石阶为哑光灰石带浅青苔藓圆角，港门红柱为漆面反光，栈桥木板带盐渍浅白纹理。\\n\\nsound_and_continuity:\\n音景设计：0至2秒海浪与远海鸥鸣，2至3.5秒加入风铃轻响，3.5至5.17秒脚步与裙摆摩擦声渐近、木板轻响收尾。连续性检查清单：发梢海蓝渐变方向全程朝右不变；左耳鳍的浅蓝蝴蝶结位置固定；围裙鲸鱼徽章始终在腰正中；鲸尾从身体左后方伸出；玛丽珍鞋无跟高变化；港门红柱在[Shot 3]背景中出现后不再复现；末帧状态=背对镜头静立于栈桥入口，双手垂放身侧，鲸尾垂落。本段为16秒整片第一段，与后两段共用同一身份锚定与色彩科学。\\n\\nlighting_and_atmosphere:\\n光照科学：太阳位于海平线上方五度的低角度位置，全程不动；主光为暖金色逆光，轮廓光勾勒发丝与鲸尾外缘；补光来自海面反射的青蓝色漫射，强度为轮廓光的三分之一；石阶与港门投影朝向镜头方向，投影边缘柔化两像素；晨雾密度在第一段最浓，随时间推进缓慢变薄，但不完全消散；空气透视让远处小镇房屋降低一档饱和度；每一段的光比保持一致，人物面部不受阴影切割，眼窝无死黑。\\n\\nnegative_constraints:\\n禁止：写实人像质感、真人皮肤纹理、脏灰色调、过曝死白、纯黑阴影、服装细节逐段漂变、鲸尾形态变化、耳鳍消失、发色改变、多余人物、文字水印、镜头硬切、画面撕裂与重影。\", \"refs\": [\"dsref_main.jpg\"], \"refVideos\": [], \"refAudios\": [], \"motionExpect\": 1.0, \"seed\": null, \"note\": \"\"}]}",
+    124,
+    "采样",
+    4,
+    "euler",
+    12.0,
+    3.0,
+    "latent_prefix",
+    "几何与窗口",
+    1376,
+    768,
+    124,
+    "5",
+    4,
+    512,
+    "解码超采样",
+    true,
+    "2.0",
+    0,
+    0,
+    0,
+    0.0,
+    "性能与交付",
+    2560,
+    1440,
+    0.8,
+    "frames",
+    "模板与内置常量",
+    "",
+    "24fps | audio 40Hz | time ratio 5:3 | canvas %32 | window 17k+5 | vae_tile 0 | decode_shifts empty | partial_start 0 | seam_min 0.1"
+   ],
+   "title": "DSD 导演台 · 最优一采 + 解码超采样"
+  },
+  {
+   "id": 91,
+   "type": "VHS_VideoCombine",
+   "pos": [
+    1480,
+    40
+   ],
+   "size": [
+    400,
+    500
+   ],
+   "flags": {},
+   "order": 8,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 8
+    },
+    {
+     "name": "audio",
+     "type": "AUDIO",
+     "link": 9
+    }
+   ],
+   "outputs": [
+    {
+     "name": "Filenames",
+     "type": "VHS_FILENAMES",
+     "links": null
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VHS_VideoCombine"
+   },
+   "widgets_values": {
+    "frame_rate": 24,
+    "loop_count": 0,
+    "filename_prefix": "dsd/best2x",
+    "format": "video/h264-mp4",
+    "pix_fmt": "yuv420p",
+    "crf": 14,
+    "save_metadata": true,
+    "trim_to_audio": false,
+    "pingpong": false,
+    "save_output": true
+   }
+  }
+ ],
+ "links": [
+  [
+   1,
+   1,
+   0,
+   90,
+   2,
+   "VAE"
+  ],
+  [
+   2,
+   2,
+   0,
+   90,
+   3,
+   "VAE"
+  ],
+  [
+   3,
+   3,
+   0,
+   90,
+   1,
+   "CLIP"
+  ],
+  [
+   4,
+   4,
+   0,
+   70,
+   0,
+   "MODEL"
+  ],
+  [
+   5,
+   70,
+   0,
+   72,
+   0,
+   "MODEL"
+  ],
+  [
+   6,
+   72,
+   0,
+   73,
+   0,
+   "MODEL"
+  ],
+  [
+   7,
+   73,
+   0,
+   90,
+   0,
+   "MODEL"
+  ],
+  [
+   8,
+   90,
+   0,
+   91,
+   0,
+   "IMAGE"
+  ],
+  [
+   9,
+   90,
+   1,
+   91,
+   1,
+   "AUDIO"
+  ]
+ ],
+ "groups": [],
+ "config": {},
+ "extra": {},
+ "version": 0.4
+}
